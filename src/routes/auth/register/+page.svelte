@@ -2,6 +2,7 @@
 	import { applyAction, enhance, type SubmitFunction } from '$app/forms';
 	import Input from '$lib/components/input.svelte';
 	import type { ActionData, PageData } from './$types';
+	import dog from '$lib/assets/dog2.jfif';
 
 	export let data: PageData;
 	export let form: ActionData;
@@ -14,13 +15,13 @@
 </script>
 
 <img
-	src="https://source.unsplash.com/Mv9hjnEUHR4/450x600"
+	src={dog}
 	alt="dog"
 	class="hidden lg:block rounded-l-lg h-auto"
 />
-<div class="w-full bg-white p-5 rounded-lg lg:rounded-l-none">
+<div class="w-full bg-slate-50 p-5 rounded-lg lg:rounded-l-none">
 	<h3 class="pt-3 text-2xl text-center">Create an Account!</h3>
-	<form class="px-8 pt-3 pb-8 bg-white rounded" method="POST" use:enhance={submitForm} novalidate>
+	<form class="px-8 pt-3 pb-8 bg-slate-50 rounded" method="POST" use:enhance={submitForm} novalidate>
 		<Input
 			name="username"
 			value={data.user.username}

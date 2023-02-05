@@ -3,6 +3,7 @@
 	import { goto } from "$app/navigation";
 	import Input from "$lib/components/input.svelte";
 	import type { ActionData } from "./$types";
+	import dog from '$lib/assets/dog1.jfif';
 
 	export let form: ActionData;
 
@@ -15,13 +16,13 @@
 
 
 <img
-	src="https://source.unsplash.com/K4mSJ7kc0As/450x600"
+	src={dog}
 	alt="dog"
 	class="hidden lg:block rounded-l-lg h-auto"
 />
-<div class="w-full bg-white p-5 rounded-lg lg:rounded-l-none flex flex-col justify-center">
+<div class="w-full bg-slate-50  p-5 rounded-lg lg:rounded-l-none flex flex-col justify-center">
 	<h3 class="pt-4 text-2xl text-center">Welcome Back!</h3>
-	<form class="px-8 pt-6 pb-8 mb-4 bg-white rounded" method="POST" use:enhance={submitForm}>
+	<form class="px-8 pt-6 pb-8 mb-4 bg-slate-50 rounded" method="POST" use:enhance={submitForm}>
 		<Input
 			name="email"
 			type="email"
