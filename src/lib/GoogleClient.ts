@@ -9,7 +9,7 @@ export const GoogleClient = new OAuth2Client({
     JWK_URL: "https://www.googleapis.com/oauth2/v3/certs",
 
     scopes: ["email","openid","profile"],
-    callback_uri: "http://localhost:5173/auth/google",
+    callback_uri: "https://main--dancing-praline-321ecd.netlify.app",
 
     clientId: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
