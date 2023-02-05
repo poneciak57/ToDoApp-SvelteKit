@@ -2,32 +2,12 @@
 	import { applyAction, enhance, type SubmitFunction } from '$app/forms';
 	import Input from '$lib/components/input.svelte';
 	import type { ActionData, PageData } from './$types';
-	import { RegisterSchema } from './verificationSchemas';
 
 	export let data: PageData;
 	export let form: ActionData;
-
-	let form_data = {
-		username: form?.data?.username.toString() ?? data.user.username,
-		firstName: form?.data?.firstName.toString() ?? data.user.firstName,
-		lastName: form?.data?.lastName.toString() ?? data.user.lastName,
-		email: form?.data?.email.toString() ?? data.user.email,
-		password: form?.data?.password,
-		passwordConfirm: form?.data?.passwordConfirm
-	}
 	
-	const submitForm: SubmitFunction = ({form: form1,data: data1,action,cancel}) =>{
-		
-		console.log()
-		console.log("form",form);
-		const formData = Object.fromEntries(data1)
-		const result = RegisterSchema.safeParse(formData)
-
-		if(!result.success){
-
-		}
+	const submitForm: SubmitFunction = (actionData) =>{
 		return async ({result,update}) =>{
-			// await update();
 			await applyAction(result);
 		}
 	}
@@ -43,22 +23,22 @@
 	<form class="px-8 pt-3 pb-8 bg-white rounded" method="POST" use:enhance={submitForm} novalidate>
 		<Input
 			name="username"
-			value={form?.data?.username.toString() ?? data.user.username}
+			value={data.user.username}
 			placeholder="Username"
 			label="Username"
 			error={form?.errors?.username?.[0]}
 		/>
-		<div class="mb-4 md:flex gap-3">
+		<div class="md:flex gap-3">
 			<Input
 				name="firstName"
-				value={form?.data?.firstName.toString() ?? data.user.firstName}
+				value={data.user.firstName}
 				placeholder="FirstName"
 				label="FirstName"
 				error={form?.errors?.firstName?.[0]}
 			/>
 			<Input
 				name="lastName"
-				value={form?.data?.lastName.toString() ?? data.user.lastName}
+				value={data.user.lastName}
 				placeholder="LastName"
 				label="LastName"
 				error={form?.errors?.lastName?.[0]}
@@ -66,7 +46,7 @@
 		</div>
 		<Input
 			name="email"
-			value={form?.data?.email.toString() ?? data.user.email}
+			value={data.user.email}
 			type="email"
 			placeholder="Email"
 			label="Email"
@@ -77,7 +57,6 @@
 				name="password"
 				type="password"
 				placeholder="******************"
-				value={form?.data?.password}
 				label="Password"
 				error={form?.errors?.password?.[0]}
 			/>
@@ -85,9 +64,8 @@
 				name="passwordConfirm"
 				type="password"
 				placeholder="******************"
-				value={form?.data?.passwordConfirm}
 				label="Confirm Password"
-				error={form?.errors?.password?.[0]}
+				error={form?.errors?.passwordConfirm?.[0]}
 			/>
 		</div>
 		<div class="mb-4 text-center">

@@ -2,6 +2,8 @@ import type { PageServerLoad } from "./$types";
 import { error, redirect } from '@sveltejs/kit';
 import { GoogleClient } from "$lib/GoogleClient";
 import SessionClient from '$lib/SessionClient';
+import DbClient from '../../../db/PrismaClient';
+import type UserToRegister from '$lib/UserToRegister.interface';
 
 export const load = (async ({url,cookies}) => {
     const code = url.searchParams.get("code");
@@ -25,7 +27,23 @@ export const load = (async ({url,cookies}) => {
     if(!oidcToken){
         throw error(401,"Bad token")
     }
-    if(!(await SessionClient.start_session({user: oidcToken.toUser()},cookies))){
+    let user = await DbClient.user.findUnique({
+        where: {
+            googleId: oidcToken.sub
+        }   
+    })
+    if(user == null){
+        cookies.set("googleUser",JSON.stringify({
+            googleId: oidcToken.sub,
+            username: oidcToken.user.username??"",
+            lastName: oidcToken.user.lastName??"",
+            firstName: oidcToken.user.firstName??"",
+            image: oidcToken.user.image,
+            email: oidcToken.user.email??""
+        } satisfies UserToRegister));
+        throw redirect(302,"/auth/register")
+    }
+    if(!(await SessionClient.start_session({user: user},cookies))){
         throw error(401,"Couldnt start session")
     }
     throw redirect(302,redirect_uri);
