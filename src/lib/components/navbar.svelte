@@ -15,7 +15,8 @@
 	import { page } from '$app/stores';
 	import { APP_NAME } from '$lib/config';
 	import type { User } from '@prisma/client';
-
+	import { goto } from '$app/navigation';
+	
 	interface Route {
 		url: string;
 		name: string;
@@ -48,6 +49,10 @@
 		</div>
 		{#if user}
 			<Avatar id="avatar-menu" src={user.image??undefined} />
+			{:else}
+			<button class=" bg-gray-100 border-gray-300 focus:border-gray-400 hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-900 focus:dark:border-gray-400 border py-3 hover:dark:bg-gray-700 px-7 rounded-lg" style="--tw-ring-offset-shadow:none" on:click={()=> goto("/auth")}>
+				Log in
+			</button>
 		{/if}
 		<NavHamburger on:click={toggle} class1="w-full md:flex md:w-auto md:order-1" />
 	</div>
