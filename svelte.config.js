@@ -10,7 +10,8 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		alias:{
-			$auth: "src/lib/auth"
+			$auth: "src/lib/auth",
+			$db: "src/db"
 		}
 	},
 	preprocess: vitePreprocess()

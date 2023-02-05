@@ -1,7 +1,9 @@
 import type { PageServerLoad } from './$types';
 import type UserToRegister from '$lib/UserToRegister.interface';
-import type { Actions } from '@sveltejs/kit';
+import { redirect, type Actions, error } from '@sveltejs/kit';
 import { z } from 'zod';
+import DbClient from '$db/PrismaClient';
+import SessionClient from '$lib/SessionClient';
 const RegisterSchema = z.object({
     username: z
         .string({ required_error: "Username is required" })
@@ -32,7 +34,7 @@ const RegisterSchema = z.object({
 export const actions :Actions = {
     default: async ({request,cookies}) => {
         const formData = Object.fromEntries(await request.formData());
-
+        
         const result = RegisterSchema.safeParse(formData);
         if(!result.success){
             const { fieldErrors: errors } = result.error.flatten();
@@ -40,7 +42,30 @@ export const actions :Actions = {
                 errors
             }
         }
-        console.log("success")
+        let CookieUser: UserToRegister|null = JSON.parse(cookies.get("googleUser")??"null")
+        if(await DbClient.user.findFirst({ where:{ email: result.data.email }})){
+            return {
+                errors:{ email: ["Email is taken"] }
+            }
+        }
+
+        cookies.delete("googleUser");
+        const User = await DbClient.user.create({
+            data: {
+                id: undefined,
+                username: result.data.username,
+                email: result.data.email,
+                firstName: result.data.firstName,
+                lastName: result.data.lastName,
+                googleId: CookieUser?.googleId,
+                image: CookieUser?.image,
+                password: result.data.password
+            }
+        })
+        if(!(await SessionClient.start_session({user: User},cookies))){
+            throw error(401,"Couldnt start session")
+        }
+        throw redirect(302,"/");
     }
 };
 

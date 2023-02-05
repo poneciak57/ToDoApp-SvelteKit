@@ -5,7 +5,7 @@ import type OIDCToken from '$auth/interfaces/OIDCToken.interface';
 export default interface IOAuth2Client{
     options: Options
 
-    verify(id_token: string): Promise<OIDCToken|false>
+    verify(id_token: string): Promise<OIDCToken|undefined>
     token_from_code(code: string): Promise<Token>
     revoke_token(token: string): Promise<boolean>
     refresh_token(refresh_token: string): Promise<Token>

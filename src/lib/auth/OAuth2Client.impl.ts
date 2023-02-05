@@ -12,7 +12,7 @@ export default class OAuth2Client implements IOAuth2Client {
 		this.options = options;
 	}
 
-	async verify(id_token: string): Promise<OIDCToken|false> {
+	async verify(id_token: string): Promise<OIDCToken|undefined> {
         const JWKS = createRemoteJWKSet(new URL(this.options.JWK_URL))
 
         return jwtVerify(id_token, JWKS, {
@@ -21,7 +21,10 @@ export default class OAuth2Client implements IOAuth2Client {
         })
         .then((d) => d.payload as Payload)
         .then((payload) => new OIDCToken(id_token,payload))
-        .catch(e => false)
+        .catch(e => {
+            console.error(e);
+            return undefined;
+        })
     }
 	async token_from_code(code: string): Promise<Token> {
         return fetch(this.options.TOKEN_URL, {

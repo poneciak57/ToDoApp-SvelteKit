@@ -4,6 +4,7 @@
 
 
     export let data:PageData;
+
     console.log(data);
 </script>
 

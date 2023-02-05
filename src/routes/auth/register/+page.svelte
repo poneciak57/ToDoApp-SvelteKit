@@ -18,7 +18,7 @@
 	alt="dog"
 	class="hidden lg:block rounded-l-lg h-auto"
 />
-<div class="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">
+<div class="w-full bg-white p-5 rounded-lg lg:rounded-l-none">
 	<h3 class="pt-3 text-2xl text-center">Create an Account!</h3>
 	<form class="px-8 pt-3 pb-8 bg-white rounded" method="POST" use:enhance={submitForm} novalidate>
 		<Input
