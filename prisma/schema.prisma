@@ -18,5 +18,14 @@ model User {
   googleId      String? @unique
   password      String 
   image         String?
+  items         Item[]
 }
 
+model Item {
+  id            Int    @id @default(autoincrement())
+  title         String
+  content       String
+  done          Boolean
+  author        User @relation(fields: [authorId],references: [id])
+  authorId      Int
+}

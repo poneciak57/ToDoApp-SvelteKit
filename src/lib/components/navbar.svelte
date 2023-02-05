@@ -13,9 +13,8 @@
 		DarkMode
 	} from 'flowbite-svelte';
 	import { page } from '$app/stores';
-	import type User from '$auth/interfaces/User.interface';
 	import { APP_NAME } from '$lib/config';
-	import { fly } from 'svelte/transition';
+	import type { User } from '@prisma/client';
 
 	interface Route {
 		url: string;
@@ -29,7 +28,7 @@
 	let:hidden
 	let:toggle
 	navDivClass="flex flex-wrap justify-between items-center"
-	navClass="px-2 sm:px-4 py-2.5 w-full border-b z-20"
+	navClass="px-2 sm:px-4 py-2.5 w-full border-b z-20 h-[7vh]"
 	fluid={false}
 	color="default"
 >
@@ -48,7 +47,7 @@
 			<DarkMode />
 		</div>
 		{#if user}
-			<Avatar id="avatar-menu" src={user.image} />
+			<Avatar id="avatar-menu" src={user.image??undefined} />
 		{/if}
 		<NavHamburger on:click={toggle} class1="w-full md:flex md:w-auto md:order-1" />
 	</div>

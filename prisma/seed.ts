@@ -1,4 +1,4 @@
-import { type User,PrismaClient } from '@prisma/client';
+import { type User,PrismaClient,type Item } from '@prisma/client';
 const prisma = new PrismaClient();
 
 const Users = [
@@ -24,11 +24,39 @@ const Users = [
     }
 ] satisfies User[]
 
+const Items = [
+  { 
+    id: undefined,
+    title: "test",
+    content: "test",
+    done: false,
+    authorId: 1
+  },
+  { 
+    id: undefined,
+    title: "test2",
+    content: "test2",
+    done: false,
+    authorId: 1
+  }
+]satisfies {
+  id: undefined;
+  title: string;
+  content: string;
+  done: boolean
+  authorId: number
+}[];
+
+
 async function seed() {
     await prisma.$connect()
     await  prisma.user.deleteMany({ where:{} });
+    await  prisma.item.deleteMany({ where:{} });
     await Promise.all(
-        Users.map( user => prisma.user.create({data: user}))
+      Users.map( user => prisma.user.create({data: user}))
+    );
+    await Promise.all(
+      Items.map( item => prisma.item.create({data: item}))
     );
 }
 

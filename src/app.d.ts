@@ -1,9 +1,16 @@
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
+
+import type Session from "$auth/interfaces/Session.interface";
+
 // and what to do when importing types
-declare namespace App {
-	// interface Error {}
-	// interface Locals {}
-	// interface PageData {}
-	// interface Platform {}
+declare global {
+	declare namespace App {
+		// interface Error {}
+		interface Locals {
+			session: Session
+		}
+		// interface PageData {}
+		// interface Platform {}
+	}
 }
