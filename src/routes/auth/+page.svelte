@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { applyAction, enhance, type SubmitFunction } from "$app/forms";
 	import { goto } from "$app/navigation";
-	import Input from "$lib/components/input.svelte";
+	import Input from "./input.svelte";
 	import type { ActionData } from "./$types";
 	import dog from '$lib/assets/dog1.jfif';
 

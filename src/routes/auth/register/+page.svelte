@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { applyAction, enhance, type SubmitFunction } from '$app/forms';
-	import Input from '$lib/components/input.svelte';
+	import Input from '../input.svelte';
 	import type { ActionData, PageData } from './$types';
 	import dog from '$lib/assets/dog2.jfif';
 
