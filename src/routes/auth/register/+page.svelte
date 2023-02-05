@@ -1,102 +1,118 @@
-<!-- Container -->
-<div class="container mx-auto">
-	<div class="flex justify-center px-6 my-12">
-		<!-- Row -->
-		<div class="w-full xl:w-3/4 lg:w-11/12 flex">
-			<!-- Col -->
-			<div
-				class="w-full h-auto bg-gray-400 hidden lg:block lg:w-5/12 bg-cover rounded-l-lg"
-				style="background-image: url('https://source.unsplash.com/Mv9hjnEUHR4/600x800')"
+<script lang="ts">
+	import { applyAction, enhance, type SubmitFunction } from '$app/forms';
+	import Input from '$lib/components/input.svelte';
+	import type { ActionData, PageData } from './$types';
+	import { RegisterSchema } from './verificationSchemas';
+
+	export let data: PageData;
+	export let form: ActionData;
+
+	let form_data = {
+		username: form?.data?.username.toString() ?? data.user.username,
+		firstName: form?.data?.firstName.toString() ?? data.user.firstName,
+		lastName: form?.data?.lastName.toString() ?? data.user.lastName,
+		email: form?.data?.email.toString() ?? data.user.email,
+		password: form?.data?.password,
+		passwordConfirm: form?.data?.passwordConfirm
+	}
+	
+	const submitForm: SubmitFunction = ({form: form1,data: data1,action,cancel}) =>{
+		
+		console.log()
+		console.log("form",form);
+		const formData = Object.fromEntries(data1)
+		const result = RegisterSchema.safeParse(formData)
+
+		if(!result.success){
+
+		}
+		return async ({result,update}) =>{
+			// await update();
+			await applyAction(result);
+		}
+	}
+</script>
+
+<img
+	src="https://source.unsplash.com/Mv9hjnEUHR4/450x600"
+	alt="dog"
+	class="hidden lg:block rounded-l-lg h-auto"
+/>
+<div class="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">
+	<h3 class="pt-3 text-2xl text-center">Create an Account!</h3>
+	<form class="px-8 pt-3 pb-8 bg-white rounded" method="POST" use:enhance={submitForm} novalidate>
+		<Input
+			name="username"
+			value={form?.data?.username.toString() ?? data.user.username}
+			placeholder="Username"
+			label="Username"
+			error={form?.errors?.username?.[0]}
+		/>
+		<div class="mb-4 md:flex gap-3">
+			<Input
+				name="firstName"
+				value={form?.data?.firstName.toString() ?? data.user.firstName}
+				placeholder="FirstName"
+				label="FirstName"
+				error={form?.errors?.firstName?.[0]}
 			/>
-			<!-- Col -->
-			<div class="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">
-				<h3 class="pt-4 text-2xl text-center">Create an Account!</h3>
-				<form class="px-8 pt-6 pb-8 mb-4 bg-white rounded">
-					<div class="mb-4 md:flex md:justify-between">
-						<div class="mb-4 md:mr-2 md:mb-0">
-							<label class="block mb-2 text-sm font-bold text-gray-700" for="firstName">
-								First Name
-							</label>
-							<input
-								class="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-								id="firstName"
-								type="text"
-								placeholder="First Name"
-							/>
-						</div>
-						<div class="md:ml-2">
-							<label class="block mb-2 text-sm font-bold text-gray-700" for="lastName">
-								Last Name
-							</label>
-							<input
-								class="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-								id="lastName"
-								type="text"
-								placeholder="Last Name"
-							/>
-						</div>
-					</div>
-					<div class="mb-4">
-						<label class="block mb-2 text-sm font-bold text-gray-700" for="email"> Email </label>
-						<input
-							class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-							id="email"
-							type="email"
-							placeholder="Email"
-						/>
-					</div>
-					<div class="mb-4 md:flex md:justify-between">
-						<div class="mb-4 md:mr-2 md:mb-0">
-							<label class="block mb-2 text-sm font-bold text-gray-700" for="password">
-								Password
-							</label>
-							<input
-								class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border border-red-500 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-								id="password"
-								type="password"
-								placeholder="******************"
-							/>
-							<p class="text-xs italic text-red-500">Please choose a password.</p>
-						</div>
-						<div class="md:ml-2">
-							<label class="block mb-2 text-sm font-bold text-gray-700" for="c_password">
-								Confirm Password
-							</label>
-							<input
-								class="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-								id="c_password"
-								type="password"
-								placeholder="******************"
-							/>
-						</div>
-					</div>
-					<div class="mb-6 text-center">
-						<button
-							class="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
-							type="button"
-						>
-							Register Account
-						</button>
-					</div>
-					<hr class="mb-6 border-t" />
-					<div class="text-center">
-						<a
-							class="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
-							href="#"
-						>
-							Forgot Password?
-						</a>
-					</div>
-					<div class="text-center">
-						<a
-							class="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
-							href="./index.html"
-						>
-							Already have an account? Login!
-						</a>
-					</div>
-				</form>
-			</div>
+			<Input
+				name="lastName"
+				value={form?.data?.lastName.toString() ?? data.user.lastName}
+				placeholder="LastName"
+				label="LastName"
+				error={form?.errors?.lastName?.[0]}
+			/>
 		</div>
-	</div>
+		<Input
+			name="email"
+			value={form?.data?.email.toString() ?? data.user.email}
+			type="email"
+			placeholder="Email"
+			label="Email"
+			error={form?.errors?.email?.[0]}
+		/>
+		<div class="mb-4 md:flex gap-3">
+			<Input
+				name="password"
+				type="password"
+				placeholder="******************"
+				value={form?.data?.password}
+				label="Password"
+				error={form?.errors?.password?.[0]}
+			/>
+			<Input
+				name="passwordConfirm"
+				type="password"
+				placeholder="******************"
+				value={form?.data?.passwordConfirm}
+				label="Confirm Password"
+				error={form?.errors?.password?.[0]}
+			/>
+		</div>
+		<div class="mb-4 text-center">
+			<button
+				class="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+				type="submit"
+			>
+				Register Account
+			</button>
+		</div>
+		{#if !data.user.googleId}
+			<div class="mb-6 text-center">
+				<button
+					class="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+					type="button"
+				>
+					Sign in with Google
+				</button>
+			</div>
+		{/if}
+		<hr class="mb-2 border-t" />
+		<div class="text-center">
+			<a class="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800" href="/auth">
+				Already have an account?
+			</a>
+		</div>
+	</form>
 </div>
