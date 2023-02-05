@@ -1,7 +1,6 @@
 import type IOIDCToken from '$auth/interfaces/OIDCToken.interface';
 import type Payload from '$auth/interfaces/Payload.interface';
 import type { UserInfo } from '$auth/interfaces/User.interface';
-import type User from '$auth/interfaces/User.interface';
 export default class OIDCToken implements IOIDCToken{
     public token: string;
 
@@ -19,15 +18,11 @@ export default class OIDCToken implements IOIDCToken{
 
         this.token = token;
         this.user = {
-            name: payload.name,
+            username: payload.name,
             email: payload.email,
-            picture: payload.picture
+            image: payload.picture,
+            firstName: payload.given_name,
+            lastName: payload.family_name
         };
-    }
-    toUser(): User{
-        return {
-            id: this.sub,
-            ...this.user
-        } satisfies User
     }
 }

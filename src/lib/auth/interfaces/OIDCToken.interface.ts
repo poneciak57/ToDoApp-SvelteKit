@@ -1,5 +1,3 @@
-import type User from "$auth/interfaces/User.interface"
-import type Payload from '$auth/interfaces/Payload.interface';
 import type { UserInfo } from '$auth/interfaces/User.interface';
 
 export default interface OIDCToken{
@@ -10,5 +8,4 @@ export default interface OIDCToken{
     exp?: number
 
     user: UserInfo
-    toUser(): User
 }
