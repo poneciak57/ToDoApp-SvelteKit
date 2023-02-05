@@ -3,6 +3,10 @@
 	import { Transitions } from "$lib/config";
 
 </script>
+<svelte:head>
+    <title>ToDoApp</title>
+</svelte:head>
+
 <div class="flex justify-center items-center h-[88vh] w-full">
     <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-9xl font-mono">Welcome To ToDoApp</h1>
 </div>

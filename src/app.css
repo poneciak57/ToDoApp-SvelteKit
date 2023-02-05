@@ -22,7 +22,7 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    @apply bg-gray-300 dark:bg-gray-800 rounded-lg;
+    @apply bg-gray-300 dark:bg-gray-800 rounded-lg m-1;
 }
 
 /* Handle on hover */

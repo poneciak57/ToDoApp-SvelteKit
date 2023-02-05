@@ -5,10 +5,21 @@ module.exports = {
     "./node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      typography: {
+        DEFAULT:{
+          css:{
+            '*': {
+              margin: "0px"
+            }
+          }
+        }
+      }
+    },
   },
   plugins: [
-    require('flowbite/plugin')
+    require('flowbite/plugin'),
+    require('@tailwindcss/typography')
   ],
   darkMode: 'class',
 }

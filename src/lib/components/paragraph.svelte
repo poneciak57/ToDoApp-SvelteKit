@@ -14,7 +14,7 @@ style="height:inherit"
 class="flex items-center"
 >
 {#if inView}
-	<div in:fly={specs} >
+	<div in:fly|local={specs} >
 		<slot />
 	</div>
 {/if}
