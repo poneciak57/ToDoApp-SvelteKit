@@ -5,7 +5,7 @@
 	export let data: PageData;
 </script>
 
-<div class="bg-slate-100 text-gray-800 h-screen">
+<div class="h-screen">
 	<Navbar
 		user={data.user}
 		routes={[
