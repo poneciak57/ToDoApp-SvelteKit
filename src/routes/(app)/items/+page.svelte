@@ -35,7 +35,7 @@
             </form>
         {:else}
         <div class="w-full flex justify-center items-center text-2xl py-20">
-            Select an item to edit
+            &#8592; Select an item to edit
         </div>
         {/if}
         <div class="w-full flex flex-col gap-3 justify-center items-center py-6">

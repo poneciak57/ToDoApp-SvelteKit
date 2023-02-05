@@ -11,7 +11,5 @@
         <div class="text-lg font-semibold" class:line-through={done}>{title}</div>
         <div class:line-through={done}>{content}</div>
     </div>
-    {#if done}
-        <div>DONE</div>
-    {/if}
+    <div>{done?"DONE":"NOT DONE"}</div>
 </div>
